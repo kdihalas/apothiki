@@ -1,0 +1,5 @@
+---
+addr: 0.0.0.0               # HTTP Listen address (default: 0.0.0.0)
+port: 8080                  # HTTP Port (default: 8080)
+mode: repo                  # Mode repo|cache|mirror (default: repo)
+data_path: data/repo        # Path where to store the layers and manifests (default: /opt/apothiki/data)

@@ -1,0 +1,8 @@
+---
+addr: 0.0.0.0
+port: 8080
+mode: cache
+data_path: data/cache
+expire: 10s
+upstream:
+  - 127.0.0.1:8080
