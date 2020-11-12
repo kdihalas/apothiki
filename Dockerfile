@@ -9,5 +9,4 @@ RUN go build -o docker-repo cmd/*
 
 FROM gcr.io/distroless/base
 COPY --from=builder /go/src/app/docker-repo /
-RUN mkdir /opt/apothiki/data
 CMD ["/docker-repo"]
