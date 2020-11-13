@@ -9,4 +9,5 @@ RUN go build -o docker-repo cmd/*
 
 FROM gcr.io/distroless/base
 COPY --from=builder /go/src/app/docker-repo /
+COPY pkg/views /pkg/views
 CMD ["/docker-repo"]
