@@ -5,9 +5,9 @@ type ErrorResponse struct {
 }
 
 type ErrorMessage struct {
-	Code string `json:"code"`
+	Code    string `json:"code"`
 	Message string `json:"message"`
-	Detail string `json"detail"`
+	Detail  string `json"detail"`
 }
 
 type RepositoriesResponse struct {
@@ -15,6 +15,6 @@ type RepositoriesResponse struct {
 }
 
 type RepositoriesTagResponse struct {
-	Name string `json:"name"`
+	Name string   `json:"name"`
 	Tags []string `json:"tags"`
 }

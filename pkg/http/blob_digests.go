@@ -10,7 +10,7 @@ type DigestController struct {
 	beego.Controller
 }
 
-func (this *DigestController) Get(){
+func (this *DigestController) Get() {
 	// Get repo name
 	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 	// Get digest
@@ -28,7 +28,7 @@ func (this *DigestController) Get(){
 	this.Ctx.ResponseWriter.Write(data)
 	this.Ctx.ResponseWriter.WriteHeader(200)
 }
-func (this *DigestController) Head(){
+func (this *DigestController) Head() {
 	// Get repo name
 	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 	// Get digest
@@ -46,7 +46,7 @@ func (this *DigestController) Head(){
 
 }
 
-func (this *DigestController) Delete(){
+func (this *DigestController) Delete() {
 	// Get repo name
 	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 	// Get digest

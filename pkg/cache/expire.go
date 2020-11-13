@@ -11,7 +11,7 @@ import (
 
 var (
 	AppFs afero.Fs
-	log = logrus.New()
+	log   = logrus.New()
 )
 
 func ExpireCache() {
@@ -32,7 +32,6 @@ func ExpireCache() {
 			}
 			return nil
 		})
-
 
 		time.Sleep(time.Duration(60 * time.Second))
 	}

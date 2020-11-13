@@ -1,5 +1,5 @@
 package sync
 
-func Sync(){
-	select{}
+func Sync() {
+	select {}
 }

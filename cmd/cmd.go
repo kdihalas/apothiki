@@ -13,11 +13,11 @@ import (
 
 var (
 	cfgFile string
-	cmd = &cobra.Command{
-		Use: "apothiki",
+	cmd     = &cobra.Command{
+		Use:   "apothiki",
 		Short: "A docker registry",
-		Long: `This is a simple docker registry with some advanced capabilities`,
-		Run: func(cmd *cobra.Command, args []string){
+		Long:  `This is a simple docker registry with some advanced capabilities`,
+		Run: func(cmd *cobra.Command, args []string) {
 			if viper.GetString("mode") == "cache" {
 				go cache.ExpireCache()
 			}

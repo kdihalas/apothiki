@@ -10,8 +10,8 @@ import (
 func getUpstream() string {
 	upstreamServers := viper.GetStringSlice("upstream")
 	size := len(upstreamServers)
-	selected := upstreamServers[rand.Intn(size - (size-1))]
-	if upstreamHealthCheck(selected){
+	selected := upstreamServers[rand.Intn(size-(size-1))]
+	if upstreamHealthCheck(selected) {
 		return selected
 	}
 	return getUpstream()

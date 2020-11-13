@@ -29,7 +29,7 @@ func (this *BlobUpload) Post() {
 	this.Ctx.ResponseWriter.WriteHeader(202)
 }
 
-func (this *BlobUploads) Get(){
+func (this *BlobUploads) Get() {
 	// Get repo name
 	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 	uuid := this.Ctx.Input.Param(":uuid")
@@ -61,12 +61,15 @@ func (this *BlobUploads) Patch() {
 	if err != nil {
 		log.Error(err.Error())
 	}
-	chunk, err := ioutil.ReadAll(this.Ctx.Request.Body)
+	// Get data from request body
+	chunk := this.Ctx.Input.RequestBody
+
+	// Write chunk to file
+	_, err = file.Write(chunk)
 	if err != nil {
 		log.Error(err.Error())
 	}
-
-	file.Write(chunk)
+	// Close file after chunk was appended
 	file.Close()
 
 	// Generate location path

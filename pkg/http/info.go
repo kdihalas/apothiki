@@ -7,6 +7,8 @@ import (
 	"sort"
 )
 
+var protectedDirs = []string{"manifests", "layers", "uploads"}
+
 type CatalogController struct {
 	beego.Controller
 }
@@ -22,7 +24,28 @@ func (this *CatalogController) Get() {
 		log.Error(err.Error())
 	}
 	for _, dir := range dirInfo {
-		if dir.IsDir() {
+		singleLevel := true
+
+		if !dir.IsDir() {
+			continue
+		}
+
+		manifestsExists, _ := afero.DirExists(AppFs, fmt.Sprintf("./%s/manifests", dir.Name()))
+		layersExists, _ := afero.DirExists(AppFs, fmt.Sprintf("./%s/layers", dir.Name()))
+
+		subDirInfo, err := afero.ReadDir(AppFs, fmt.Sprintf("./%s", dir.Name()))
+		if err != nil {
+			log.Error(err.Error())
+		}
+
+		for _, subDir := range subDirInfo {
+			if subDir.IsDir() && !contains(protectedDirs, subDir.Name()) {
+				singleLevel = false
+				repos = append(repos, fmt.Sprintf("%s/%s", dir.Name(), subDir.Name()))
+			}
+		}
+
+		if (manifestsExists && layersExists) || singleLevel {
 			repos = append(repos, dir.Name())
 		}
 
@@ -46,4 +69,14 @@ func (this *TagController) Get() {
 	sort.Strings(tags)
 	this.Data["json"] = &tags
 	this.ServeJSON()
+}
+
+func contains(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
+
+	return false
 }

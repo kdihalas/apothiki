@@ -40,7 +40,7 @@ func (this *ManifestController) Get() {
 
 	this.Data["json"] = &doc
 	this.Ctx.Output.Header("Docker-Content-Digest", fmt.Sprintf("sha256:%x", h.Sum(nil)))
-	this.Ctx.Output.ContentType(fmt.Sprintf("%s",doc["mediaType"]))
+	this.Ctx.Output.ContentType(fmt.Sprintf("%s", doc["mediaType"]))
 	this.ServeJSON()
 }
 
@@ -82,10 +82,11 @@ func (this *ManifestController) Put() {
 	if err != nil {
 		log.Error(err.Error())
 	}
-	chunk, err := ioutil.ReadAll(this.Ctx.Request.Body)
-	if err != nil {
-		log.Error(err.Error())
-	}
+
+	// Get data from request body
+	chunk := this.Ctx.Input.RequestBody
+
+	// Calculate sha256 hash for the file
 	h := sha256.New()
 	file.Write(chunk)
 	if _, err := io.Copy(h, file); err != nil {
