@@ -1,8 +1,12 @@
 ---
-addr: 0.0.0.0
-port: 8080
-mode: cache
-data_path: data/cache
+addr: 0.0.0.0               # HTTP Listen address (default: 0.0.0.0)
+port: 8082                  # HTTP Port (default: 8080)
 expire: 10s
+admin:
+  enabled: true             # Admin enable/disable (default: true)
+  port: 8083                # Admin port listener (default: 8081)
+mode: cache                  # Mode repo|cache|mirror (default: repo)
+data_path: data/cache        # Path where to store the layers and manifests (default: /opt/apothiki/data)
 upstream:
-  - 127.0.0.1:8080
+  - transport: http
+    addr: 127.0.0.1:8080
