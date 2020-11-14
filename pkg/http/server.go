@@ -60,7 +60,8 @@ func Run() {
 	// Enable copy request body
 	beego.BConfig.CopyRequestBody = true
 	// Enable Admin interface
-	beego.BConfig.Listen.EnableAdmin = true
+	beego.BConfig.Listen.EnableAdmin = viper.GetBool("admin.enabled")
+	beego.BConfig.Listen.AdminPort = viper.GetInt("admin.port")
 	// Read config from yaml file
 	beego.BConfig.Listen.HTTPAddr = viper.GetString("addr")
 	beego.BConfig.Listen.HTTPPort = viper.GetInt("port")
