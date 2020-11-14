@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/spf13/viper"
 	"math/rand"
+	"net/http"
 )
 
 func GetUpstream() string {
@@ -15,9 +16,15 @@ func GetUpstream() string {
 	upstream := convertMapString(upstreamServers[rand.Intn(size-(size-1))].(map[interface{}]interface{}))
 
 	// Generate selected URL
-	selected :=  fmt.Sprintf(fmt.Sprintf("%s://%s", upstream["transport"], upstream["addr"]))
+	return fmt.Sprintf(fmt.Sprintf("%s://%s", upstream["transport"], upstream["addr"]))
+}
 
-	return selected
+func upstreamHealthy(upstream string) bool {
+	resp, _ := http.Get(fmt.Sprintf("%s/v2"))
+	if resp.StatusCode != 200 {
+		return false
+	}
+	return true
 }
 
 func GetContainerName(repository string, image string) string {
