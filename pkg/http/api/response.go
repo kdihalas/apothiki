@@ -1,4 +1,4 @@
-package http
+package api
 
 type ErrorResponse struct {
 	Errors []ErrorMessage `json:"errors"`

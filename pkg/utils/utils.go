@@ -1,4 +1,4 @@
-package http
+package utils
 
 import (
 	"fmt"
@@ -7,14 +7,14 @@ import (
 	"net/http"
 )
 
-func getUpstream() string {
+func GetUpstream() string {
 	upstreamServers := viper.GetStringSlice("upstream")
 	size := len(upstreamServers)
 	selected := upstreamServers[rand.Intn(size-(size-1))]
 	if upstreamHealthCheck(selected) {
 		return selected
 	}
-	return getUpstream()
+	return GetUpstream()
 }
 
 func upstreamHealthCheck(upstream string) bool {
@@ -25,7 +25,7 @@ func upstreamHealthCheck(upstream string) bool {
 	return true
 }
 
-func getContainerName(repository string, image string) string {
+func GetContainerName(repository string, image string) string {
 	name := fmt.Sprintf("%s/%s", repository, image)
 	if repository == "" {
 		name = fmt.Sprintf("%s", image)

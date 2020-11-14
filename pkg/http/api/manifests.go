@@ -1,10 +1,11 @@
-package http
+package api
 
 import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/kdihalas/apothiki/pkg/utils"
 	"io"
 	"io/ioutil"
 )
@@ -18,7 +19,7 @@ func (this *ManifestController) Get() {
 	reference := this.Ctx.Input.Param(":reference")
 
 	// Get repo name
-	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
+	name := utils.GetContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 
 	file, err := AppFs.Open(fmt.Sprintf("%s/manifests/%s", name, reference))
 	if err != nil {
@@ -48,7 +49,7 @@ func (this *ManifestController) Head() {
 	reference := this.Ctx.Input.Param(":reference")
 
 	// Get repo name
-	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
+	name := utils.GetContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 
 	file, err := AppFs.Open(fmt.Sprintf("%s/manifests/%s", name, reference))
 	if err != nil {
@@ -71,7 +72,7 @@ func (this *ManifestController) Put() {
 	reference := this.Ctx.Input.Param(":reference")
 
 	// Get repo name
-	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
+	name := utils.GetContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 
 	err := AppFs.MkdirAll(fmt.Sprintf("%s/manifests", name), 0755)
 	if err != nil {
@@ -101,7 +102,7 @@ func (this *ManifestController) Delete() {
 	reference := this.Ctx.Input.Param(":reference")
 
 	// Get repo name
-	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
+	name := utils.GetContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 
 	err := AppFs.Remove(fmt.Sprintf("%s/manifests/%s", name, reference))
 	if err != nil {

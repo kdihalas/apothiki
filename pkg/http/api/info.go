@@ -1,8 +1,9 @@
-package http
+package api
 
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/kdihalas/apothiki/pkg/utils"
 	"github.com/spf13/afero"
 	"sort"
 )
@@ -57,7 +58,7 @@ func (this *CatalogController) Get() {
 
 func (this *TagController) Get() {
 	var tags = []string{}
-	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
+	name := utils.GetContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 
 	fileInfo, err := afero.ReadDir(AppFs, fmt.Sprintf("%s/manifests", name))
 	if err != nil {

@@ -1,8 +1,9 @@
-package http
+package api
 
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/kdihalas/apothiki/pkg/utils"
 	"github.com/satori/go.uuid"
 	"io/ioutil"
 )
@@ -17,7 +18,7 @@ type BlobUploads struct {
 
 func (this *BlobUpload) Post() {
 	// Get repo name
-	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
+	name := utils.GetContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 
 	// Calculate Upload UUID
 	uuid := uuid.NewV4()
@@ -31,7 +32,7 @@ func (this *BlobUpload) Post() {
 
 func (this *BlobUploads) Get() {
 	// Get repo name
-	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
+	name := utils.GetContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 	uuid := this.Ctx.Input.Param(":uuid")
 
 	fileInfo, err := AppFs.Stat(fmt.Sprintf("%s/uploads/%s", name, uuid))
@@ -51,7 +52,7 @@ func (this *BlobUploads) Get() {
 
 func (this *BlobUploads) Patch() {
 	// Get repo name
-	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
+	name := utils.GetContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 	uuid := this.Ctx.Input.Param(":uuid")
 	err := AppFs.MkdirAll(fmt.Sprintf("%s/uploads", name), 0755)
 	if err != nil {
@@ -90,7 +91,7 @@ func (this *BlobUploads) Patch() {
 
 func (this *BlobUploads) Put() {
 	// Get repo name
-	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
+	name := utils.GetContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 	uuid := this.Ctx.Input.Param(":uuid")
 	digest := this.Ctx.Input.Query("digest")
 
@@ -129,7 +130,7 @@ func (this *BlobUploads) Put() {
 
 func (this *BlobUploads) Delete() {
 	// Get repo name
-	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
+	name := utils.GetContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 	uuid := this.Ctx.Input.Param(":uuid")
 	err := AppFs.Remove(fmt.Sprintf("%s/uploads/%s", name, uuid))
 	if err != nil {

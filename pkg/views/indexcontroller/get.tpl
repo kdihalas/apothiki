@@ -5,7 +5,7 @@
         Repositories
       </p>
       {{range $key, $val := .repos}}
-      <a class="panel-block is-active" href="/{{$val}}/">
+      <a class="panel-block is-active" href="/ui/{{$val}}/">
         <span class="panel-icon">
           <i class="fas fa-book" aria-hidden="true"></i>
         </span>

@@ -1,8 +1,9 @@
-package http
+package api
 
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/kdihalas/apothiki/pkg/utils"
 	"io/ioutil"
 )
 
@@ -12,7 +13,7 @@ type DigestController struct {
 
 func (this *DigestController) Get() {
 	// Get repo name
-	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
+	name := utils.GetContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 	// Get digest
 	digest := this.Ctx.Input.Param(":digest")
 
@@ -30,7 +31,7 @@ func (this *DigestController) Get() {
 }
 func (this *DigestController) Head() {
 	// Get repo name
-	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
+	name := utils.GetContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 	// Get digest
 	digest := this.Ctx.Input.Param(":digest")
 
@@ -48,7 +49,7 @@ func (this *DigestController) Head() {
 
 func (this *DigestController) Delete() {
 	// Get repo name
-	name := getContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
+	name := utils.GetContainerName(this.Ctx.Input.Param(":repo"), this.Ctx.Input.Param(":name"))
 	// Get digest
 	digest := this.Ctx.Input.Param(":digest")
 
