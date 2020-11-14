@@ -35,7 +35,7 @@ func HeadUpstream(url string) (string, string, bool) {
 	return upstream,resp.Header.Get("Docker-Content-Digest"), true
 }
 
-func PullFromUpstream(url string) ([]byte, error){
+func GetUpstream(url string) ([]byte, error){
 	log.Info("Pulling file from upstream url %s", url)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -59,7 +59,7 @@ func CacheLocal(upstream string, dir string, path string) ([]byte, error){
 		log.Error(err.Error())
 		return nil, err
 	}
-	data, err := PullFromUpstream(fmt.Sprintf("%s/v2/%s", upstream, path))
+	data, err := GetUpstream(fmt.Sprintf("%s/v2/%s", upstream, path))
 	if err != nil {
 		log.Error(err.Error())
 		return nil, err
